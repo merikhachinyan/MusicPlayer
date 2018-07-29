@@ -112,19 +112,6 @@ public class PlayMusicFragment extends Fragment{
                 handler.postDelayed(this, 1000);
             }
         }).start();
-//        getActivity().runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                int time = binder.getCurrentPosition();
-//                @SuppressLint("DefaultLocale") String timeText = String.format("%02d : %02d",
-//                        TimeUnit.MILLISECONDS.toMinutes(time),
-//                        TimeUnit.MILLISECONDS.toSeconds(time) -
-//                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time)));
-//
-//                mCurrentTime.setText(timeText);
-//                handler.postDelayed(this, 1000);
-//            }
-//        });
     }
 
     private MusicPlayerService.MusicBinder binder;
