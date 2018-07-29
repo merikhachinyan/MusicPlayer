@@ -94,19 +94,37 @@ public class PlayMusicFragment extends Fragment{
     }
 
     private void updateTime(final Handler handler){
-        getActivity().runOnUiThread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                int time = binder.getCurrentPosition();
-                @SuppressLint("DefaultLocale") String timeText = String.format("%02d : %02d",
-                        TimeUnit.MILLISECONDS.toMinutes(time),
-                        TimeUnit.MILLISECONDS.toSeconds(time) -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time)));
+                int position = binder.getCurrentPosition();
+                @SuppressLint("DefaultLocale") final String time = String.format("%02d : %02d",
+                        TimeUnit.MILLISECONDS.toMinutes(position),
+                        TimeUnit.MILLISECONDS.toSeconds(position) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(position)));
 
-                mCurrentTime.setText(timeText);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mCurrentTime.setText(time);
+                    }
+                });
                 handler.postDelayed(this, 1000);
             }
-        });
+        }).start();
+//        getActivity().runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                int time = binder.getCurrentPosition();
+//                @SuppressLint("DefaultLocale") String timeText = String.format("%02d : %02d",
+//                        TimeUnit.MILLISECONDS.toMinutes(time),
+//                        TimeUnit.MILLISECONDS.toSeconds(time) -
+//                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time)));
+//
+//                mCurrentTime.setText(timeText);
+//                handler.postDelayed(this, 1000);
+//            }
+//        });
     }
 
     private MusicPlayerService.MusicBinder binder;
